@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Christening of Kyrene Elodie - Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --sky-light: #b3e5fc;
+            --sky-deep: #0277bd;
+            --accent: #0288d1;
+            --card-bg: #ffffff;
+            --pink-primary: #FF94C4;
+            --pink-dark: #FF0A90;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Poppins", system-ui;
+            background: #FFD9EA;
+            color: #19324a;
+            padding-bottom: 48px;
+            overflow-x: hidden;
+        }
+
+        /* ---------------- ADMIN BUTTON & VIEW ---------------- */
+        .admin-login-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 10001;
+            background: transparent;
+            border: none;
+            color: rgba(0, 0, 0, 0.05); /* Nearly invisible */
+            cursor: pointer;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .admin-login-btn:hover {
+            color: var(--pink-dark);
+        }
+
+        #admin-view {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 20000;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        #admin-view h2 {
+            font-family: "League Spartan", sans-serif;
+            color: var(--pink-dark);
+            margin-bottom: 20px;
+            border-bottom: 2px solid #FFD9EA;
+            padding-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .admin-table th, .admin-table td {
+            border: 1px solid #eee;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .admin-table th {
+            background: var(--pink-primary);
+            color: white;
+        }
+
+        /* New Styles for Delete Action */
+        .btn-delete {
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-clear {
+            background: #333;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .close-admin {
+            padding: 8px 16px;
+            background: #ccc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* ---------------- EXISTING STYLES ---------------- */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+        }
+
+        .loading-screen img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .loading-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .cover {
+            position: fixed;
+            inset: 0;
+            background: url("https://i.pinimg.com/736x/07/84/53/07845320f2402c5bc921661813d75d4d.jpg") center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .cover::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        .cover h1 {
+            position: relative;
+            color: #fff;
+            font-family: "Great Vibes", cursive;
+            font-size: 50px;
+            z-index: 3;
+            text-shadow: 0 4px 10px rgba(10, 0, 0, 0.5);
+        }
+
+        .cover button {
+            position: relative;
+            margin-top: 20px;
+            z-index: 3;
+            padding: 12px 28px;
+            border: 2px solid #ffffff;
+            border-radius: 10px;
+            background: var(--pink-primary);
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .cover button:hover { transform: scale(1.05); }
+        .cover.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+        .snow-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+        .snowflake { position: absolute; top: -10px; color: white; font-size: 10px; opacity: 0.9; animation: fall linear infinite; }
+        @keyframes fall { 0% { transform: translateY(-10px); } 100% { transform: translateY(110vh); } }
+
+        .top-box { max-width: 860px; margin: 28px auto 8px; background: var(--pink-primary); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(3, 34, 60, 0.12); display: flex; justify-content: center; }
+        .top-box img { width: 100%; max-width: 520px; border-radius: 14px; }
+        .top-caption { text-align: center; margin-top: 10px; font-style: italic; color: var(--pink-dark); font-weight: 500; font-size: 0.95rem; }
+
+        .slideshow-container { max-width: 860px; position: relative; margin: 20px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 28px rgba(3, 34, 60, 0.1); }
+        .slide { display: none; animation: fade 1.5s ease-in-out; }
+        .slide img { width: 100%; border-radius: 16px; }
+        @keyframes fade { from { opacity: 0.4 } to { opacity: 1 } }
+
+        .dots { text-align: center; margin-top: 5px; }
+        .dot { height: 8px; width: 8px; margin: 0 4px; background: #bbb; border-radius: 50%; display: inline-block; }
+        .active-dot { background: var(--pink-dark); }
+
+        .hero { margin: 20px auto; max-width: 1000px; border-radius: 16px; overflow: hidden; }
+        .hero-header { padding: 56px 24px; background-image: url("https://static.vecteezy.com/system/resources/previews/010/483/661/non_2x/pink-baby-girl-toys-cute-seamless-pattern-background-vector.jpg"); background-size: cover; background-position: center; text-align: center; text-shadow: 0 4px 10px rgba(10, 0, 0, 0.5); }
+        .hero-header h1 { font-family: "Great Vibes", cursive; font-size: 75px; color: white; }
+
+        #countdown { font-family: "League Spartan", sans-serif; color: var(--pink-dark); font-weight: 700; margin-top: 25px; display: flex; justify-content: center; gap: 35px; }
+        .time-box { text-align: center; }
+        .time-box span { display: block; font-size: 0.9rem; margin-top: 6px; }
+
+        .card { background: white; border-radius: 14px; padding: 22px; margin: -40px auto 0; max-width: 820px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .details { display: flex; flex-direction: column; gap: 10px; }
+        .details strong { color: var(--pink-dark); }
+        .date-time { font-family: "Times New Roman", serif; }
+        a.map-link { color: var(--pink-primary); text-decoration: underline; font-weight: 600; }
+
+        form.rsvp { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+        .row { display: flex; gap: 12px; }
+        .row .col { flex: 1; }
+        input, textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--pink-primary); font-size: 1rem; outline: none; }
+        .btn { padding: 12px 18px; border-radius: 10px; background: var(--pink-primary); color: white; font-weight: 600; border: none; cursor: pointer; }
+
+        footer { margin-top: 22px; text-align: center; color: var(--pink-primary); font-style: italic; }
+
+        .choice-box { flex: 1; cursor: pointer; }
+        .choice-box input { display: none; }
+        .choice-content { padding: 12px; border: 1px solid var(--pink-primary); border-radius: 10px; text-align: center; font-weight: 600; background: white; }
+        .choice-box input:checked + .choice-content { background: var(--pink-primary); color: white; border: 1px solid var(--pink-dark); transform: scale(1.05); }
+
+        .extra-message { text-align: center; font-family: "Great Vibes", cursive; font-size: 80px; color: var(--pink-dark); margin-top: 10px; }
+        .designer { text-align: center; font-size: 0.85rem; color: var(--pink-primary); margin-top: 50px; }
+    </style>
+</head>
+
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="https://costly-crimson-x1izc2k3xy.edgeone.app/Taylor%20Swift%20-%20Never%20Grow%20Up%20(Taylor%27s%20Version)%20(Lyric%20Video).mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="admin-login-btn" onclick="checkAdmin()">⚙</button>
+
+    <div id="admin-view">
+        <h2>
+            RSVP Respondents List
+            <div>
+                <button class="btn-clear" onclick="clearAllRSVPs()">Clear All</button>
+                <button class="close-admin" onclick="document.getElementById('admin-view').style.display='none'">Close Dashboard</button>
+            </div>
+        </h2>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Message</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="admin-body">
+            </tbody>
+        </table>
+    </div>
+
+    <div class="loading-screen" id="loading">
+        <img src="https://media.tenor.com/0p54Ll3ekM0AAAAi/cute-cat.gif">
+    </div>
+
+    <div class="cover" id="cover">
+        <div class="snow-container" id="snow"></div>
+        <h1>You are invited</h1>
+        <h1>to</h1>
+        <h1>Kyrene Elodie's</h1>
+        <h1>Christening</h1>
+        <button onclick="openInvite()">Open</button>
+    </div>
+
+    <div class="top-box">
+        <img src="https://i.imgur.com/cdKbcwt.png">
+    </div>
+
+    <div class="top-caption">Our little blessing — Kyrene Elodie 💗</div>
+
+    <div class="slideshow-container">
+        <div class="slide"><img src="https://i.imgur.com/rcjAYCO.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/G4U2VHy.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/C9Pvdmm.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/Ed74oyy.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/SDV9eOY.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/QeEnbMM.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/zhFFKP7.jpeg"></div>
+    </div>
+
+    <div class="dots">
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
+    <div class="hero">
+        <div class="hero-header">
+            <h1>Christening</h1>
+            <h1>of</h1>
+            <h1>Kyrene Elodie</h1>
+            <p>You're invited to celebrate this blessed day</p>
+            <div id="countdown"></div>
+        </div>
+
+        <div class="card">
+            <div class="details">
+                <div><strong>Date:</strong> <span class="date-time">May 10, 2026</span></div>
+                <div><strong>Time:</strong> <span class="date-time">11:30 AM</span></div>
+                <div>
+                    <strong>Venue:</strong>
+                    <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=San+Roque+Cathedral+Parish+%28Kaloocan+Cathedral%29&cp=14.649893%7E120.972908&lvl=16" target="_blank">San Roque Cathedral - Caloocan</a>
+                </div>
+                <div>
+                    <strong>Reception:</strong>
+                    <a class="map-link" href="https://www.bing.com/maps/search?q=Boy+Ching+Woo+Restaurant+Caloocan&cp=14.649747%7E120.972557&lvl=16&style=r" target="_blank">BOY CHING WOO - Caloocan</a>
+                </div>
+            </div>
+
+            <form class="rsvp" id="rsvpForm" onsubmit="sendRSVP(event)">
+                <div class="row">
+                    <div class="col"><input type="text" name="Name" placeholder="Your Full Name" required></div>
+                    <div class="col"><input type="email" name="Email" placeholder="Your Email" required></div>
+                </div>
+                <div class="row">
+                    <div class="col" style="display:flex; gap:10px;">
+                        <label class="choice-box">
+                            <input type="radio" name="Attendance" value="Attending" required>
+                            <div class="choice-content">Absolutely, wouldn't miss it!</div>
+                        </label>
+                        <label class="choice-box">
+                            <input type="radio" name="Attendance" value="Declined">
+                            <div class="choice-content">Can't make it this time</div>
+                        </label>
+                    </div>
+                </div>
+                <textarea name="Message" placeholder="Message / Number of guests – strictly limited to 2"></textarea>
+                <button type="submit" class="btn">Send RSVP</button>
+            </form>
+
+            <footer>Thank you for being part of Kyrene Elodie's special day 💗</footer>
+        </div>
+    </div>
+
+    <div class="extra-message">See you there!</div>
+    <div class="designer">Designed by Odyssey</div>
+
+    <script>
+        /* Loading screen */
+        window.addEventListener("load", () => {
+            const loading = document.getElementById("loading");
+            setTimeout(() => loading.classList.add("hidden"), 1200);
+        });
+
+        /* Open invite */
+        function openInvite() {
+            document.getElementById("cover").classList.add("hidden");
+            document.getElementById("bgMusic").play();
+        }
+
+        /* Snow effect */
+        const snowContainer = document.getElementById("snow");
+        function createSnow() {
+            const snowflake = document.createElement("div");
+            snowflake.classList.add("snowflake");
+            snowflake.innerHTML = "❄";
+            snowflake.style.left = Math.random() * 100 + "vw";
+            snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+            snowflake.style.animationDuration = Math.random() * 3 + 3 + "s";
+            snowContainer.appendChild(snowflake);
+            setTimeout(() => { snowflake.remove(); }, 6000);
+        }
+        setInterval(createSnow, 200);
+
+        /* Slideshow */
+        let slideIndex = 0;
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            let dots = document.getElementsByClassName("dot");
+            for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+            slideIndex++;
+            if (slideIndex > slides.length) { slideIndex = 1; }
+            for (let i = 0; i < dots.length; i++) { dots[i].classList.remove("active-dot"); }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].classList.add("active-dot");
+            setTimeout(showSlides, 3000);
+        }
+        showSlides();
+
+        /* Countdown */
+        const eventDate = new Date("May 10, 2026 11:30:00").getTime();
+        const countdown = document.getElementById("countdown");
+
+        setInterval(function () {
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            if (distance < 0) {
+                countdown.innerHTML = "The special day has arrived! 💗";
+                return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const secs = Math.floor((distance % (1000 * 60)) / 1000);
+            countdown.innerHTML =
+                `<div class="time-box">${days}<span>DAYS</span></div>
+                <div class="time-box">${hours}<span>HOURS</span></div>
+                <div class="time-box">${mins}<span>MINUTES</span></div>
+                <div class="time-box">${secs}<span>SECONDS</span></div>`;
+        }, 1000);
+
+        /* RSVP Storage Logic */
+        function sendRSVP(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const rsvpEntry = {
+                name: formData.get("Name"),
+                email: formData.get("Email"),
+                status: formData.get("Attendance"),
+                message: formData.get("Message")
+            };
+
+            let existingResponses = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+            existingResponses.push(rsvpEntry);
+            localStorage.setItem("christening_rsvps", JSON.stringify(existingResponses));
+
+            alert(`Thank you, ${rsvpEntry.name}! Your RSVP has been noted.`);
+            e.target.reset();
+        }
+
+        /* Admin Dashboard Logic */
+        function checkAdmin() {
+            const pass = prompt("Enter Admin Password:");
+            if (pass === "admin123") {
+                renderAdminData();
+                document.getElementById("admin-view").style.display = "block";
+            } else {
+                alert("Unauthorized Access.");
+            }
+        }
+
+        function renderAdminData() {
+            const tableBody = document.getElementById("admin-body");
+            const data = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+            
+            if (data.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No RSVPs received yet.</td></tr>";
+                return;
+            }
+
+            tableBody.innerHTML = data.map((item, index) => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td>${item.email}</td>
+                    <td>${item.status}</td>
+                    <td>${item.message || '-'}</td>
+                    <td><button class="btn-delete" onclick="deleteRSVP(${index})">Delete</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteRSVP(index) {
+            if (confirm("Are you sure you want to delete this respondent?")) {
+                let data = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+                data.splice(index, 1);
+                localStorage.setItem("christening_rsvps", JSON.stringify(data));
+                renderAdminData();
+            }
+        }
+
+        function clearAllRSVPs() {
+            if (confirm("WARNING: This will delete ALL RSVP responses. Proceed?")) {
+                localStorage.removeItem("christening_rsvps");
+                renderAdminData();
+            }
+        }
+    </script>
+</body>
+
+</html>
