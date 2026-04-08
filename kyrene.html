@@ -484,7 +484,7 @@
             const data = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
             
             if (data.length === 0) {
-                tableBody.innerHTML = "<tr><td colspan='5' style='text-align:center;'>No RSVPs received yet.</td></tr>";
+                tableBody.innerHTML = "<tr><td colspan='3'>Check your <a href='https://docs.google.com/spreadsheets/d/1xKSG7YYSM7Qakl3AXzze9AwoXn_L8umVLkMPNHDFiGI/' target='_blank'>Google Sheet</a> for the full list.</td></tr>";
                 return;
             }
 
