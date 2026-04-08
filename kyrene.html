@@ -243,24 +243,21 @@
     <button class="admin-login-btn" onclick="checkAdmin()">⚙</button>
 
     <div id="admin-view">
-        <h2>
-            RSVP Respondents List
-            <div>
-                <button class="btn-clear" onclick="clearAllRSVPs()">Clear All</button>
-                <button class="close-admin" onclick="document.getElementById('admin-view').style.display='none'">Close Dashboard</button>
-            </div>
-        </h2>
+        <div style="display:flex; justify-content: space-between; align-items:center;">
+            <h2 style="color:var(--pink-dark)">RSVP Dashboard</h2>
+            <button onclick="document.getElementById('admin-view').style.display='none'" style="padding:10px; border-radius:5px; border:none; background:#eee; cursor:pointer;">Close</button>
+        </div>
+        <p style="font-size:0.8rem; margin-top:10px;">Note: Check your Google Sheet for the most up-to-date data.</p>
         <table class="admin-table">
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Email</th>
-                    <th>Status</th>
+                    <th>Attendance</th>
                     <th>Message</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody id="admin-body">
+                <tr><td colspan="3">Loading data from Google...</td></tr>
             </tbody>
         </table>
     </div>
@@ -323,26 +320,24 @@
                 </div>
             </div>
 
-            <form class="rsvp" id="rsvpForm" onsubmit="sendRSVP(event)">
-                <div class="row">
-                    <div class="col"><input type="text" name="Name" placeholder="Your Full Name" required></div>
-                    <div class="col"><input type="email" name="Email" placeholder="Your Email" required></div>
-                </div>
-                <div class="row">
-                    <div class="col" style="display:flex; gap:10px;">
-                        <label class="choice-box">
-                            <input type="radio" name="Attendance" value="Attending" required>
-                            <div class="choice-content">Absolutely, wouldn't miss it!</div>
-                        </label>
-                        <label class="choice-box">
-                            <input type="radio" name="Attendance" value="Declined">
-                            <div class="choice-content">Can't make it this time</div>
-                        </label>
-                    </div>
-                </div>
-                <textarea name="Message" placeholder="Message / Number of guests – strictly limited to 2"></textarea>
-                <button type="submit" class="btn">Send RSVP</button>
-            </form>
+            <form class="rsvp" id="rsvpForm">
+            <div class="row">
+                <input type="text" name="Name" placeholder="Full Name" required>
+                <input type="email" name="Email" placeholder="Email Address" required>
+            </div>
+            <div class="row">
+                <label class="choice-box">
+                    <input type="radio" name="Attendance" value="Attending" required>
+                    <div class="choice-content">Absolutely, wouldn't miss it!</div>
+                </label>
+                <label class="choice-box">
+                    <input type="radio" name="Attendance" value="Declined">
+                    <div class="choice-content">Can't make it this time</div>
+                </label>
+            </div>
+            <textarea name="Message" placeholder="Message / Guest count (strictly max 2)"></textarea>
+            <button type="submit" class="btn" id="submitBtn">Send RSVP</button>
+        </form>
 
             <footer>Thank you for being part of Kyrene Elodie's special day 💗</footer>
         </div>
@@ -352,6 +347,45 @@
     <div class="designer">Designed by Odyssey</div>
 
     <script>
+      const scriptURL = 'https://script.google.com/macros/s/AKfycbxGW9kuVV5HYM0udbEwykvh2jMT06CuUWlQpLAT783vpBe4FfVmJ9ONnOas_DmR9lRxVw/exec';
+        const form = document.getElementById('rsvpForm');
+        const btn = document.getElementById('submitBtn');
+
+        // --- RSVP FORM SUBMISSION ---
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerHTML = "Sending...";
+
+            fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+                .then(res => {
+                    alert("Thank you! Your RSVP is saved. 💗");
+                    btn.disabled = false;
+                    btn.innerHTML = "Send RSVP";
+                    form.reset();
+                })
+                .catch(err => {
+                    alert("Error. Please try again.");
+                    btn.disabled = false;
+                });
+        });
+
+        // --- ADMIN DASHBOARD ---
+        function checkAdmin() {
+            const pass = prompt("Admin Password:");
+            if (pass === "admin123") {
+                document.getElementById('admin-view').style.display = 'block';
+                fetchAdminData();
+            } else { alert("Wrong password."); }
+        }
+
+        // Fetches data from your script to show in the dashboard
+        function fetchAdminData() {
+            const tableBody = document.getElementById("admin-body");
+            // Note: Google Apps Script usually requires a GET function to return data
+            // For now, this points you to open your Sheet directly for security.
+            tableBody.innerHTML = "<tr><td colspan='3'>Check your <a href='https://docs.google.com/spreadsheets/d/1xKSG7YYSM7Qakl3AXzze9AwoXn_L8umVLkMPNHDFiGI/' target='_blank'>Google Sheet</a> for the full list.</td></tr>";
+        }
         /* Loading screen */
         window.addEventListener("load", () => {
             const loading = document.getElementById("loading");
