@@ -181,6 +181,17 @@
             font-weight: 600;
             cursor: pointer;
         }
+        .note-box {
+    background: #fff0f6;
+    border-left: 5px solid var(--pink-dark);
+    padding: 15px 18px;
+    border-radius: 10px;
+    margin: 15px 0;
+    font-size: 0.95rem;
+    color: #444;
+    font-family: "Cormorant Garamond", serif;
+    line-height: 1.6;
+}
 
         .cover button:hover { transform: scale(1.05); }
         .cover.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
@@ -276,23 +287,20 @@
     </div>
 
     <div class="top-box">
-        <img src="https://i.imgur.com/cdKbcwt.png">
+        <img src="https://i.imgur.com/ZTl6pIg.png">
     </div>
 
     <div class="top-caption">Our little blessing — Kyrene Elodie 💗</div>
 
     <div class="slideshow-container">
-        <div class="slide"><img src="https://i.imgur.com/rcjAYCO.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/G4U2VHy.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/C9Pvdmm.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/Ed74oyy.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/SDV9eOY.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/QeEnbMM.jpeg"></div>
-        <div class="slide"><img src="https://i.imgur.com/zhFFKP7.jpeg"></div>
+        <div class="slide"><img src="https://i.imgur.com/H782YA6.png"></div>
+        <div class="slide"><img src="https://i.imgur.com/kH47iOf.png"></div>
+        <div class="slide"><img src="https://i.imgur.com/0Yzy85Q.png"></div>
+        <div class="slide"><img src="https://i.imgur.com/g1xe67i.png"></div>
+        
     </div>
 
     <div class="dots">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
         <span class="dot"></span>
     </div>
@@ -308,16 +316,18 @@
 
         <div class="card">
             <div class="details">
-                <div><strong>Date:</strong> <span class="date-time">May 17, 2026</span></div>
-                <div><strong>Time:</strong> <span class="date-time">11:30 AM</span></div>
+                <div><strong>Date:</strong> <span class="date-time">June 13, 2026</span></div>
+                
                 <div>
                     <strong>Venue:</strong>
-                    <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=Hearts+of+Jesus+and+Mary+Parish+&cp=14.646360%7E121.011008&lvl=14" target="_blank">Hearts of Jesus and Mary Parish Church</a>
+                    <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=Hearts+of+Jesus%26Mary+Parish+Nadurata%2C+L.+Nadurata+Street+between+7th+and+8th+Avenue%2C+Grace+Park%2C+Malabon%2C+National+Capital+Region+1400%2C+Philippines&ss=id.local_ypid%3A%22YN8144x8690424471736675701%22&st=Hearts+of+Jesus%26Mary+Parish+Nadurata&sfa=L.+Nadurata+Street+between+7th+and+8th+Avenue%2C+Grace+Park%2C+Malabon%2C+National+Capital+Region+1400%2C+Philippines&cp=14.648373%7E120.978409&lvl=16" target="_blank">Sacred heart of Jesus and Mary Parish</a>
                 </div>
+                <div style="margin-left:20px;"><strong>Time:</strong> <span class="date-time">11:00 AM</span></div>
                 <div>
                     <strong>Reception:</strong>
                     <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=TRAMWAY+BANAWE" target="_blank">Tramway Banawe QC</a>
                 </div>
+                <div style="margin-left:20px;"><strong>Time:</strong> <span class="date-time">12:30 PM</span></div>
             </div>
 
             <form class="rsvp" id="rsvpForm">
@@ -335,14 +345,24 @@
                     <div class="choice-content">Can't make it this time</div>
                 </label>
             </div>
-            <textarea name="Message" placeholder="Message / Guest count (strictly max 2)"></textarea>
+            <textarea name="Message" placeholder="Message "></textarea>
             <button type="submit" class="btn" id="submitBtn">Send RSVP</button>
         </form>
 
             <footer>Thank you for being part of Kyrene Elodie's special day 💗</footer>
         </div>
     </div>
+</div> <!-- end of details -->
 
+<div class="note-box">
+    <p>
+        Join us in celebrating Kyrene Elodie's baptism! <br><br>
+        Given our limited seating, this invitation is personally extended to you alone. 
+        We appreciate your understanding in helping us manage our special day.
+    </p>
+</div>
+
+<form class="rsvp" id="rsvpForm">
     <div class="extra-message">See you there!</div>
     <div class="designer">Designed by Odyssey</div>
 
@@ -428,7 +448,7 @@
         showSlides();
 
         /* Countdown */
-        const eventDate = new Date("May 17, 2026 11:30:00").getTime();
+        const eventDate = new Date("June 13, 2026 11:00:00").getTime();
         const countdown = document.getElementById("countdown");
 
         setInterval(function () {
