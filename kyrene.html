@@ -1,558 +1,1159 @@
 <!doctype html>
+
 <html lang="en">
 
+
+
 <head>
+
     <meta charset="utf-8">
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
+
     <title>Christening of Kyrene Elodie - Invitation</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;500;600&family=League+Spartan:wght@400;600;700&display=swap" rel="stylesheet">
 
+
+
     <style>
+
         :root {
+
             --sky-light: #b3e5fc;
+
             --sky-deep: #0277bd;
+
             --accent: #0288d1;
+
             --card-bg: #ffffff;
+
             --pink-primary: #FF94C4;
+
             --pink-dark: #FF0A90;
+
         }
+
+
 
         * {
+
             box-sizing: border-box;
+
             margin: 0;
+
             padding: 0;
+
         }
+
+
 
         body {
+
             font-family: "Poppins", system-ui;
+
             background: #FFD9EA;
+
             color: #19324a;
+
             padding-bottom: 48px;
+
             overflow-x: hidden;
+
         }
+
+
 
         /* ---------------- ADMIN BUTTON & VIEW ---------------- */
+
         .admin-login-btn {
+
             position: fixed;
+
             top: 10px;
+
             right: 10px;
+
             z-index: 10001;
+
             background: transparent;
+
             border: none;
+
             color: rgba(0, 0, 0, 0.05); /* Nearly invisible */
+
             cursor: pointer;
+
             font-size: 14px;
+
             transition: color 0.3s;
+
         }
+
+
 
         .admin-login-btn:hover {
+
             color: var(--pink-dark);
+
         }
+
+
 
         #admin-view {
+
             display: none;
+
             position: fixed;
+
             inset: 0;
+
             background: white;
+
             z-index: 20000;
+
             padding: 30px;
+
             overflow-y: auto;
+
         }
+
+
 
         #admin-view h2 {
+
             font-family: "League Spartan", sans-serif;
+
             color: var(--pink-dark);
+
             margin-bottom: 20px;
+
             border-bottom: 2px solid #FFD9EA;
+
             padding-bottom: 10px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
         }
+
+
 
         .admin-table {
+
             width: 100%;
+
             border-collapse: collapse;
+
             margin-top: 20px;
+
             font-size: 0.9rem;
+
         }
+
+
 
         .admin-table th, .admin-table td {
+
             border: 1px solid #eee;
+
             padding: 12px;
+
             text-align: left;
+
         }
+
+
 
         .admin-table th {
+
             background: var(--pink-primary);
+
             color: white;
+
         }
+
+
 
         /* New Styles for Delete Action */
+
         .btn-delete {
+
             background: #ff4d4d;
+
             color: white;
+
             border: none;
+
             padding: 6px 12px;
+
             border-radius: 5px;
+
             cursor: pointer;
+
             font-weight: 600;
+
         }
+
+
 
         .btn-clear {
+
             background: #333;
+
             color: white;
+
             border: none;
+
             padding: 8px 16px;
+
             border-radius: 5px;
+
             cursor: pointer;
+
             margin-right: 10px;
+
         }
+
+
 
         .close-admin {
+
             padding: 8px 16px;
+
             background: #ccc;
+
             border: none;
+
             border-radius: 5px;
+
             cursor: pointer;
+
         }
+
+
 
         /* ---------------- EXISTING STYLES ---------------- */
+
         .loading-screen {
+
             position: fixed;
+
             inset: 0;
+
             background: white;
+
             display: flex;
+
             align-items: center;
+
             justify-content: center;
+
             z-index: 10000;
+
         }
+
+
 
         .loading-screen img {
+
             width: 100px;
+
             height: 100px;
+
         }
+
+
 
         .loading-screen.hidden {
+
             opacity: 0;
+
             visibility: hidden;
+
             transition: opacity 1s ease, visibility 1s ease;
+
         }
+
+
 
         .cover {
+
             position: fixed;
+
             inset: 0;
+
             background: url("https://i.pinimg.com/736x/07/84/53/07845320f2402c5bc921661813d75d4d.jpg") center/cover no-repeat;
+
             display: flex;
+
             flex-direction: column;
+
             justify-content: center;
+
             align-items: center;
+
             text-align: center;
+
             z-index: 9999;
+
             transition: opacity 1s ease, visibility 1s ease;
+
         }
+
+
 
         .cover::after {
+
             content: "";
+
             position: absolute;
+
             inset: 0;
+
             background: rgba(0, 0, 0, 0.35);
+
         }
+
+
 
         .cover h1 {
+
             position: relative;
+
             color: #fff;
+
             font-family: "Great Vibes", cursive;
+
             font-size: 50px;
+
             z-index: 3;
+
             text-shadow: 0 4px 10px rgba(10, 0, 0, 0.5);
+
         }
+
+
 
         .cover button {
+
             position: relative;
+
             margin-top: 20px;
+
             z-index: 3;
+
             padding: 12px 28px;
+
             border: 2px solid #ffffff;
+
             border-radius: 10px;
+
             background: var(--pink-primary);
+
             color: #fff;
+
             font-size: 1.1rem;
+
             font-weight: 600;
+
             cursor: pointer;
+
         }
+
         
 
+        
+
+.photo-space {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    border: 2px dashed #ffc7df;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    background: #fff6fa;
+
+    padding: 10px;
+
+    text-align: center;
+
+}
+
+
+
+.photo-space img {
+
+    width: 100%;
+
+    max-height: 350px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+}
+
+
+
         .cover button:hover { transform: scale(1.05); }
+
         .cover.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
+
+
         .snow-container { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+
         .snowflake { position: absolute; top: -10px; color: white; font-size: 10px; opacity: 0.9; animation: fall linear infinite; }
+
         @keyframes fall { 0% { transform: translateY(-10px); } 100% { transform: translateY(110vh); } }
 
+
+
         .top-box { max-width: 860px; margin: 28px auto 8px; background: var(--pink-primary); border-radius: 18px; padding: 18px; box-shadow: 0 10px 30px rgba(3, 34, 60, 0.12); display: flex; justify-content: center; }
+
         .top-box img { width: 100%; max-width: 520px; border-radius: 14px; }
+
         .top-caption { text-align: center; margin-top: 10px; font-style: italic; color: var(--pink-dark); font-weight: 500; font-size: 0.95rem; }
 
+
+
         .slideshow-container { max-width: 860px; position: relative; margin: 20px auto; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 28px rgba(3, 34, 60, 0.1); }
+
         .slide { display: none; animation: fade 1.5s ease-in-out; }
+
         .slide img { width: 100%; border-radius: 16px; }
+
         @keyframes fade { from { opacity: 0.4 } to { opacity: 1 } }
 
+
+
         .dots { text-align: center; margin-top: 5px; }
+
         .dot { height: 8px; width: 8px; margin: 0 4px; background: #bbb; border-radius: 50%; display: inline-block; }
+
         .active-dot { background: var(--pink-dark); }
 
+
+
         .hero { margin: 20px auto; max-width: 1000px; border-radius: 16px; overflow: hidden; }
+
         .hero-header { padding: 56px 24px; background-image: url("https://static.vecteezy.com/system/resources/previews/010/483/661/non_2x/pink-baby-girl-toys-cute-seamless-pattern-background-vector.jpg"); background-size: cover; background-position: center; text-align: center; text-shadow: 0 4px 10px rgba(10, 0, 0, 0.5); }
+
         .hero-header h1 { font-family: "Great Vibes", cursive; font-size: 75px; color: white; }
 
+
+
         #countdown { font-family: "League Spartan", sans-serif; color: var(--pink-dark); font-weight: 700; margin-top: 25px; display: flex; justify-content: center; gap: 35px; }
+
         .time-box { text-align: center; }
+
         .time-box span { display: block; font-size: 0.9rem; margin-top: 6px; }
 
+
+
         .card { background: white; border-radius: 14px; padding: 22px; margin: -40px auto 0; max-width: 820px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+
         .details { display: flex; flex-direction: column; gap: 10px; }
+
         .details strong { color: var(--pink-dark); }
+
         .date-time { font-family: "Times New Roman", serif; }
+
         a.map-link { color: var(--pink-primary); text-decoration: underline; font-weight: 600; }
 
+
+
         form.rsvp { margin-top: 14px; display: flex; flex-direction: column; gap: 12px; }
+
         .row { display: flex; gap: 12px; }
+
         .row .col { flex: 1; }
+
         input, textarea { width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--pink-primary); font-size: 1rem; outline: none; }
+
         .btn { padding: 12px 18px; border-radius: 10px; background: var(--pink-primary); color: white; font-weight: 600; border: none; cursor: pointer; }
+
+
 
         footer { margin-top: 22px; text-align: center; color: var(--pink-primary); font-style: italic; }
 
+
+
         .choice-box { flex: 1; cursor: pointer; }
+
         .choice-box input { display: none; }
+
         .choice-content { padding: 12px; border: 1px solid var(--pink-primary); border-radius: 10px; text-align: center; font-weight: 600; background: white; }
+
         .choice-box input:checked + .choice-content { background: var(--pink-primary); color: white; border: 1px solid var(--pink-dark); transform: scale(1.05); }
 
+
+
         .extra-message { text-align: center; font-family: "Great Vibes", cursive; font-size: 80px; color: var(--pink-dark); margin-top: 10px; }
+
         .designer { text-align: center; font-size: 0.85rem; color: var(--pink-primary); margin-top: 50px; }
+
     </style>
+
 </head>
+
+
 
 <body>
 
+
+
     <audio id="bgMusic" loop>
+
         <source src="https://costly-crimson-x1izc2k3xy.edgeone.app/Taylor%20Swift%20-%20Never%20Grow%20Up%20(Taylor%27s%20Version)%20(Lyric%20Video).mp3" type="audio/mpeg">
+
     </audio>
+
+
 
     <button class="admin-login-btn" onclick="checkAdmin()">⚙</button>
 
+
+
     <div id="admin-view">
+
         <div style="display:flex; justify-content: space-between; align-items:center;">
+
             <h2 style="color:var(--pink-dark)">RSVP Dashboard</h2>
+
             <button onclick="document.getElementById('admin-view').style.display='none'" style="padding:10px; border-radius:5px; border:none; background:#eee; cursor:pointer;">Close</button>
+
         </div>
+
         <p style="font-size:0.8rem; margin-top:10px;">Note: Check your Google Sheet for the most up-to-date data.</p>
+
         <table class="admin-table">
+
             <thead>
+
                 <tr>
+
                     <th>Name</th>
+
                     <th>Attendance</th>
+
                     <th>Message</th>
+
                 </tr>
+
             </thead>
+
             <tbody id="admin-body">
+
                 <tr><td colspan="3">Loading data from Google...</td></tr>
+
             </tbody>
+
         </table>
+
     </div>
+
+
 
     <div class="loading-screen" id="loading">
+
         <img src="https://media.tenor.com/0p54Ll3ekM0AAAAi/cute-cat.gif">
+
     </div>
+
+
 
     <div class="cover" id="cover">
+
         <div class="snow-container" id="snow"></div>
+
         <h1>You are invited</h1>
+
         <h1>to</h1>
+
         <h1>Kyrene Elodie's</h1>
+
         <h1>Christening</h1>
+
         <button onclick="openInvite()">Open</button>
+
     </div>
 
+
+
     <div class="top-box">
+
         <img src="https://i.imgur.com/apDMVIK.png">
+
     </div>
+
+
 
     <div class="top-caption">Our little blessing — Kyrene Elodie 💗</div>
 
+
+
     <div class="slideshow-container">
+
         <div class="slide"><img src="https://i.imgur.com/H782YA6.png"></div>
+
         <div class="slide"><img src="https://i.imgur.com/kH47iOf.png"></div>
+
         <div class="slide"><img src="https://i.imgur.com/0Yzy85Q.png"></div>
+
         <div class="slide"><img src="https://i.imgur.com/g1xe67i.png"></div>
+
         
+
     </div>
+
+
 
     <div class="dots">
+
         <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+
         <span class="dot"></span>
+
     </div>
+
+
 
     <div class="hero">
+
         <div class="hero-header">
+
             <h1>Christening</h1>
+
             <h1>of</h1>
+
             <h1>Kyrene Elodie</h1>
+
             <p>You're invited to celebrate this blessed day</p>
+
             <div id="countdown"></div>
+
         </div>
+
+
 
         <div class="card">
+
             <div class="details">
+
                 <div><strong>Date:</strong> <span class="date-time">June 13, 2026</span></div>
+
                 
+
                 <div>
+
                     <strong>Church:</strong>
+
                     <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=Hearts+of+Jesus%26Mary+Parish+Nadurata%2C+L.+Nadurata+Street+between+7th+and+8th+Avenue%2C+Grace+Park%2C+Malabon%2C+National+Capital+Region+1400%2C+Philippines&ss=id.local_ypid%3A%22YN8144x8690424471736675701%22&st=Hearts+of+Jesus%26Mary+Parish+Nadurata&sfa=L.+Nadurata+Street+between+7th+and+8th+Avenue%2C+Grace+Park%2C+Malabon%2C+National+Capital+Region+1400%2C+Philippines&cp=14.648373%7E120.978409&lvl=16" target="_blank">Sacred heart of Jesus and Mary Parish</a>
+
                 </div>
+
                 <div style="margin-left:20px;"><strong>Time:</strong> <span class="date-time">11:00 AM</span></div>
+
                 <div>
+
                     <strong>Reception:</strong>
+
                     <a class="map-link" href="https://www.bing.com/maps/search?style=r&q=TRAMWAY+BANAWE" target="_blank">Tramway Banawe QC</a>
+
                 </div>
+
                 <div style="margin-left:20px;"><strong>Time:</strong> <span class="date-time">12:30 PM</span></div>
+
             </div>
+
+
 
             <form class="rsvp" id="rsvpForm">
+
             <div class="row">
+
                 <input type="text" name="Name" placeholder="Full Name" required>
+
                 <input type="email" name="Email" placeholder="Email Address" required>
+
             </div>
+
             <div class="row">
+
                 <label class="choice-box">
+
                     <input type="radio" name="Attendance" value="Attending" required>
+
                     <div class="choice-content">Absolutely, wouldn't miss it!</div>
+
                 </label>
+
                 <label class="choice-box">
+
                     <input type="radio" name="Attendance" value="Declined">
+
                     <div class="choice-content">Can't make it this time</div>
+
                 </label>
+
             </div>
+
             <textarea name="Message" placeholder="Message... "></textarea>
-            <button type="submit" class="btn" id="submitBtn">Send RSVP</button>
-        </form>
 
-            <footer>Thank you for being part of Kyrene Elodie's special day 💗</footer>
-        </div>
-    </div>
-</div> <!-- end of details -->
+<!-- Photo Space -->
 
-<div class="note-box" style="
-    background:#fff6fa;
-    border:1px solid #ffc7df;
-    border-left:6px solid #FF0A90;
-    padding:18px 22px;
-    border-radius:12px;
-    font-family:'Times New Roman', serif;
-    color:#444;
-    line-height:1.9;
-    font-size:14px;
-    text-align:justify;
-    box-shadow:0 3px 10px rgba(0,0,0,0.05);
-">
+<div class="photo-space">
 
-    <p style="margin-bottom:15px; text-indent:40px;">
-        Join us in celebrating Kyrene Elodie's baptism!
-    </p>
-
-    <p style="margin-bottom:15px; text-indent:40px;">
-        Given our limited seating, this invitation is personally extended to you alone. 
-        We sincerely appreciate your understanding in helping us manage our special day.
-    </p>
-
-    <p style="margin-bottom:15px; text-indent:40px;">
-        All seats are designated exclusively for the counted guests only. 
-        As much as we would love to accommodate everyone, the venue can only cater to a limited number of attendees.
-    </p>
-
-    <p style="margin-bottom:15px; text-indent:40px;">
-        If we do not receive your confirmation, we will assume that you are unable to join us, 
-        and the reserved seat may be given to another guest.
-    </p>
+    <img src="https://i.imgur.com/DQtw3wZ.jpeg" alt="Photo Placeholder">
 
 </div>
 
+            <button type="submit" class="btn" id="submitBtn">Send RSVP</button>
+
+        </form>
+
+
+
+            <footer>Thank you for being part of Kyrene Elodie's special day 💗</footer>
+
+        </div>
+
+    </div>
+
+</div> <!-- end of details -->
+
+
+
+<div class="note-box" style="
+
+    background:#fff6fa;
+
+    border:1px solid #ffc7df;
+
+    border-left:6px solid #FF0A90;
+
+    padding:18px 22px;
+
+    border-radius:12px;
+
+    font-family:'Times New Roman', serif;
+
+    color:#444;
+
+    line-height:1.9;
+
+    font-size:14px;
+
+    text-align:justify;
+
+    box-shadow:0 3px 10px rgba(0,0,0,0.05);
+
+">
+
+
+
+    <p style="margin-bottom:15px; text-indent:40px;">
+
+        Join us in celebrating Kyrene Elodie's baptism!
+
+    </p>
+
+
+
+    <p style="margin-bottom:15px; text-indent:40px;">
+
+        Given our limited seating, this invitation is personally extended to you alone. 
+
+        We sincerely appreciate your understanding in helping us manage our special day.
+
+    </p>
+
+
+
+    <p style="margin-bottom:15px; text-indent:40px;">
+
+        All seats are designated exclusively for the counted guests only. 
+
+        As much as we would love to accommodate everyone, the venue can only cater to a limited number of attendees.
+
+    </p>
+
+
+
+    <p style="margin-bottom:15px; text-indent:40px;">
+
+        If we do not receive your confirmation, we will assume that you are unable to join us, 
+
+        and the reserved seat may be given to another guest.
+
+    </p>
+
+
+
+</div>
+
+
+
 <form class="rsvp" id="rsvpForm">
+
     <div class="extra-message">See you there!</div>
+
     <div class="designer">Designed by Odyssey</div>
 
+
+
     <script>
+
       const scriptURL = 'https://script.google.com/macros/s/AKfycbxGW9kuVV5HYM0udbEwykvh2jMT06CuUWlQpLAT783vpBe4FfVmJ9ONnOas_DmR9lRxVw/exec';
+
         const form = document.getElementById('rsvpForm');
+
         const btn = document.getElementById('submitBtn');
 
+
+
         // --- RSVP FORM SUBMISSION ---
+
         form.addEventListener('submit', e => {
+
             e.preventDefault();
+
             btn.disabled = true;
+
             btn.innerHTML = "Sending...";
 
+
+
             fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+
                 .then(res => {
+
                     alert("Thank you! Your RSVP is saved. 💗");
+
                     btn.disabled = false;
+
                     btn.innerHTML = "Send RSVP";
+
                     form.reset();
+
                 })
+
                 .catch(err => {
+
                     alert("Error. Please try again.");
+
                     btn.disabled = false;
+
                 });
+
         });
+
+
 
         // --- ADMIN DASHBOARD ---
+
         function checkAdmin() {
+
             const pass = prompt("Admin Password:");
+
             if (pass === "admin123") {
+
                 document.getElementById('admin-view').style.display = 'block';
+
                 fetchAdminData();
+
             } else { alert("Wrong password."); }
+
         }
+
+
 
         // Fetches data from your script to show in the dashboard
+
         function fetchAdminData() {
+
             const tableBody = document.getElementById("admin-body");
+
             // Note: Google Apps Script usually requires a GET function to return data
+
             // For now, this points you to open your Sheet directly for security.
+
             tableBody.innerHTML = "<tr><td colspan='3'>Check your <a href='https://docs.google.com/spreadsheets/d/1xKSG7YYSM7Qakl3AXzze9AwoXn_L8umVLkMPNHDFiGI/' target='_blank'>Google Sheet</a> for the full list.</td></tr>";
+
         }
+
         /* Loading screen */
+
         window.addEventListener("load", () => {
+
             const loading = document.getElementById("loading");
+
             setTimeout(() => loading.classList.add("hidden"), 1200);
+
         });
 
+
+
         /* Open invite */
+
         function openInvite() {
+
             document.getElementById("cover").classList.add("hidden");
+
             document.getElementById("bgMusic").play();
+
         }
+
+
 
         /* Snow effect */
+
         const snowContainer = document.getElementById("snow");
+
         function createSnow() {
+
             const snowflake = document.createElement("div");
+
             snowflake.classList.add("snowflake");
+
             snowflake.innerHTML = "❄";
+
             snowflake.style.left = Math.random() * 100 + "vw";
+
             snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+
             snowflake.style.animationDuration = Math.random() * 3 + 3 + "s";
+
             snowContainer.appendChild(snowflake);
+
             setTimeout(() => { snowflake.remove(); }, 6000);
+
         }
+
         setInterval(createSnow, 200);
 
+
+
         /* Slideshow */
+
         let slideIndex = 0;
+
         function showSlides() {
+
             let slides = document.getElementsByClassName("slide");
+
             let dots = document.getElementsByClassName("dot");
+
             for (let i = 0; i < slides.length; i++) { slides[i].style.display = "none"; }
+
             slideIndex++;
+
             if (slideIndex > slides.length) { slideIndex = 1; }
+
             for (let i = 0; i < dots.length; i++) { dots[i].classList.remove("active-dot"); }
+
             slides[slideIndex - 1].style.display = "block";
+
             dots[slideIndex - 1].classList.add("active-dot");
+
             setTimeout(showSlides, 3000);
+
         }
+
         showSlides();
 
+
+
         /* Countdown */
+
         const eventDate = new Date("June 13, 2026 11:00:00").getTime();
+
         const countdown = document.getElementById("countdown");
 
+
+
         setInterval(function () {
+
             const now = new Date().getTime();
+
             const distance = eventDate - now;
+
             if (distance < 0) {
+
                 countdown.innerHTML = "The special day has arrived! 💗";
+
                 return;
+
             }
+
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
             const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
             const secs = Math.floor((distance % (1000 * 60)) / 1000);
+
             countdown.innerHTML =
+
                 `<div class="time-box">${days}<span>DAYS</span></div>
+
                 <div class="time-box">${hours}<span>HOURS</span></div>
+
                 <div class="time-box">${mins}<span>MINUTES</span></div>
+
                 <div class="time-box">${secs}<span>SECONDS</span></div>`;
+
         }, 1000);
 
+
+
         /* RSVP Storage Logic */
+
         function sendRSVP(e) {
+
             e.preventDefault();
+
             const formData = new FormData(e.target);
+
             const rsvpEntry = {
+
                 name: formData.get("Name"),
+
                 email: formData.get("Email"),
+
                 status: formData.get("Attendance"),
+
                 message: formData.get("Message")
+
             };
 
+
+
             let existingResponses = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+
             existingResponses.push(rsvpEntry);
+
             localStorage.setItem("christening_rsvps", JSON.stringify(existingResponses));
 
+
+
             alert(`Thank you, ${rsvpEntry.name}! Your RSVP has been noted.`);
+
             e.target.reset();
+
         }
+
+
 
         /* Admin Dashboard Logic */
+
         function checkAdmin() {
+
             const pass = prompt("Enter Admin Password:");
+
             if (pass === "admin123") {
+
                 renderAdminData();
+
                 document.getElementById("admin-view").style.display = "block";
+
             } else {
+
                 alert("Unauthorized Access.");
+
             }
+
         }
+
+
 
         function renderAdminData() {
+
             const tableBody = document.getElementById("admin-body");
+
             const data = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+
             
+
             if (data.length === 0) {
+
                 tableBody.innerHTML = "<tr><td colspan='3'>Check your <a href='https://docs.google.com/spreadsheets/d/1xKSG7YYSM7Qakl3AXzze9AwoXn_L8umVLkMPNHDFiGI/' target='_blank'>Google Sheet</a> for the full list.</td></tr>";
+
                 return;
+
             }
+
             
+
+
 
             tableBody.innerHTML = data.map((item, index) => `
+
                 <tr>
+
                     <td>${item.name}</td>
+
                     <td>${item.email}</td>
+
                     <td>${item.status}</td>
+
                     <td>${item.message || '-'}</td>
+
                     <td><button class="btn-delete" onclick="deleteRSVP(${index})">Delete</button></td>
+
                 </tr>
+
             `).join('');
+
         }
+
+
 
         function deleteRSVP(index) {
+
             if (confirm("Are you sure you want to delete this respondent?")) {
+
                 let data = JSON.parse(localStorage.getItem("christening_rsvps")) || [];
+
                 data.splice(index, 1);
+
                 localStorage.setItem("christening_rsvps", JSON.stringify(data));
+
                 renderAdminData();
+
             }
+
         }
 
+
+
         function clearAllRSVPs() {
+
             if (confirm("WARNING: This will delete ALL RSVP responses. Proceed?")) {
+
                 localStorage.removeItem("christening_rsvps");
+
                 renderAdminData();
+
             }
+
         }
+
     </script>
+
 </body>
+
+
 
 </html>
